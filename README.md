@@ -14,6 +14,7 @@ A full-stack web application for tracking and managing daily habits, built with 
 - Express.js
 - MongoDB (Mongoose)
 - Clerk for authentication
+- Svix for webhook (for syncing clerk auth with mongoDB)
 - RESTful API architecture
 
 ## 📋 Prerequisites
