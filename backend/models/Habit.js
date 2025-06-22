@@ -25,16 +25,6 @@ const habitSchema = new mongoose.Schema({
         enum: ['daily', 'weekly', 'monthly'],
         default: 'daily',
     },
-    target: {
-        type: Number,
-        required: true,
-        min: 1,
-    },
-    unit: {
-        type: String,
-        required: true,
-        trim: true,
-    },
     experiencePoints: {
         type: Number,
         default: 10,

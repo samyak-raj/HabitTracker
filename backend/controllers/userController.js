@@ -1,46 +1,75 @@
 import User from '../models/User.js';
-import { users } from '@clerk/clerk-sdk-node';
+import { generateToken } from '../middleware/auth.js';
+import { OAuth2Client } from 'google-auth-library';
 
-// Create a new user
-export const createUser = async (req, res) => {
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+// Google OAuth authentication
+export const googleAuth = async (req, res) => {
     try {
-        console.log('createUser controller called');
-        console.log('Auth data:', req.auth);
+        const { token } = req.body;
 
-        const clerkId = req.auth.userId;
-        if (!clerkId) {
-            return res.status(400).json({ error: 'No userId found in auth data.' });
+        if (!token) {
+            return res.status(400).json({ error: 'Google token is required' });
         }
 
-        // Fetch user details from Clerk
-        const clerkUser = await users.getUser(clerkId);
-
-        const emailAddresses = clerkUser.emailAddresses;
-        const username = clerkUser.username;
-
-        if (!emailAddresses || !emailAddresses.length) {
-            console.log('No email addresses found in Clerk user');
-            return res.status(400).json({ error: 'No email address found for this user.' });
-        }
-
-        // Check if user already exists
-        const existingUser = await User.findOne({ clerkId });
-        if (existingUser) {
-            console.log('Existing user found:', existingUser);
-            return res.status(200).json(existingUser);
-        }
-
-        // Create new user
-        const user = new User({
-            clerkId,
-            email: emailAddresses[0].emailAddress,
-            username: username || emailAddresses[0].emailAddress.split('@')[0],
+        // Verify Google token
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: process.env.GOOGLE_CLIENT_ID
         });
 
-        await user.save();
-        res.status(201).json(user);
-    } catch (err) {
-        console.error('Error in createUser:', err);
+        const payload = ticket.getPayload();
+        const { sub: googleId, email, name, picture } = payload;
+
+        // Check if user already exists
+        let user = await User.findOne({ googleId });
+
+        if (!user) {
+            // Create new user
+            user = new User({
+                googleId,
+                email,
+                username: name || email.split('@')[0],
+                profilePicture: picture
+            });
+            await user.save();
+        }
+
+        // Generate JWT token
+        const jwtToken = generateToken(user._id);
+
+        res.json({
+            user: {
+                id: user._id,
+                email: user.email,
+                username: user.username,
+                profilePicture: user.profilePicture,
+                level: user.level,
+                experience: user.experience
+            },
+            token: jwtToken
+        });
+    } catch (error) {
+        console.error('Google auth error:', error);
+        res.status(500).json({ error: 'Authentication failed' });
+    }
+};
+
+// Get current user
+export const getCurrentUser = async (req, res) => {
+    try {
+        const user = req.user;
+        res.json({
+            id: user._id,
+            email: user.email,
+            username: user.username,
+            profilePicture: user.profilePicture,
+            level: user.level,
+            experience: user.experience
+        });
+    } catch (error) {
+        console.error('Get current user error:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 };
@@ -48,15 +77,18 @@ export const createUser = async (req, res) => {
 // Get a user by ID
 export const getUserById = async (req, res) => {
     try {
-        const clerkId = req.auth.userId;
-        if (!clerkId) {
-            return res.status(401).json({ error: 'Unauthorized: No userId in auth.' });
-        }
-        const user = await User.findOne({ clerkId });
+        const user = await User.findById(req.params.id);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
-        res.json(user);
+        res.json({
+            id: user._id,
+            email: user.email,
+            username: user.username,
+            profilePicture: user.profilePicture,
+            level: user.level,
+            experience: user.experience
+        });
     } catch (err) {
         console.error('Error in getUserById:', err);
         res.status(500).json({ error: 'Internal server error' });
@@ -66,15 +98,18 @@ export const getUserById = async (req, res) => {
 // Update a user
 export const updateUser = async (req, res) => {
     try {
-        const clerkId = req.auth.userId;
-        if (!clerkId) {
-            return res.status(401).json({ error: 'Unauthorized: No userId in auth.' });
-        }
-        const user = await User.findOneAndUpdate({ clerkId }, req.body, { new: true });
+        const user = await User.findByIdAndUpdate(req.user._id, req.body, { new: true });
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
-        res.json(user);
+        res.json({
+            id: user._id,
+            email: user.email,
+            username: user.username,
+            profilePicture: user.profilePicture,
+            level: user.level,
+            experience: user.experience
+        });
     } catch (err) {
         console.error('Error in updateUser:', err);
         res.status(500).json({ error: 'Internal server error' });
@@ -84,11 +119,7 @@ export const updateUser = async (req, res) => {
 // Delete a user
 export const deleteUser = async (req, res) => {
     try {
-        const clerkId = req.auth.userId;
-        if (!clerkId) {
-            return res.status(401).json({ error: 'Unauthorized: No userId in auth.' });
-        }
-        const user = await User.findOneAndDelete({ clerkId });
+        const user = await User.findByIdAndDelete(req.user._id);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }

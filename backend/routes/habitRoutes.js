@@ -5,21 +5,21 @@ import {
     getHabitsByUser,
     getHabitById,
     updateHabit,
-    deleteHabit
+    deleteHabit,
+    completeHabit
 } from '../controllers/habitController.js';
 
 const router = express.Router();
 
 // All routes require authentication
-router.use(requireAuth());
+router.use(requireAuth);
 
 // Habit routes
-router.post('/', (req, res, next) => {
-    console.log("router hit");
-}, createHabit);
-router.get('/user/:userId', getHabitsByUser);
+router.post('/', createHabit);
+router.get('/user', getHabitsByUser);
 router.get('/:id', getHabitById);
 router.put('/:id', updateHabit);
 router.delete('/:id', deleteHabit);
+router.post('/:id/complete', completeHabit);
 
 export default router; 
