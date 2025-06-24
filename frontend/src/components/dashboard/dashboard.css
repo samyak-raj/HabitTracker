@@ -223,30 +223,6 @@ body {
     color: #64748b;
 }
 
-.progress-section {
-    margin-bottom: 1rem;
-}
-
-.progress-bar {
-    height: 8px;
-    background-color: #e2e8f0;
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 0.5rem;
-}
-
-.progress-fill {
-    height: 100%;
-    background-color: #2563eb;
-    border-radius: 4px;
-    transition: width 0.3s ease;
-}
-
-.completion-rate {
-    font-size: 0.875rem;
-    color: #64748b;
-}
-
 .habit-actions {
     display: flex;
     gap: 0.75rem;
@@ -322,5 +298,12 @@ body {
         width: 100%;
         justify-content: center;
     }
+}
+
+/* Animation for removing a habit card */
+.habit-card.fade-out-and-remove {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
  

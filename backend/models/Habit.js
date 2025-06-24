@@ -31,7 +31,7 @@ const habitSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['active', 'completed', 'archived'],
+        enum: ['active', 'completed'],
         default: 'active',
     },
     progress: [{

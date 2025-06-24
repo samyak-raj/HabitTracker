@@ -35,42 +35,30 @@ export const editHabit = async (habitId) => {
     }
 }
 
-// Function to handle habit completion
+// Function to handle habit completion (now deletes the habit)
 export const completeHabit = async (habitId) => {
     try {
-        // First get the habit to check its current state
-        const habitResponse = await api.get(`/habits/${habitId}`)
-        const habit = habitResponse.data
-        const today = new Date().toISOString().split('T')[0]
+        const habitCard = document.querySelector(`.habit-card[data-habit-id="${habitId}"]`);
+        if (!habitCard) return;
 
-        // Check if habit is already completed for today
-        const todayProgress = habit.progress.find(p =>
-            new Date(p.date).toISOString().split('T')[0] === today
-        )
+        // Call the API to delete the habit
+        await api.delete(`/habits/${habitId}`);
 
-        if (todayProgress && todayProgress.completed) {
-            alert('You have already completed this habit today!')
-            return
-        }
+        // Add a fade-out effect, then remove the card
+        habitCard.classList.add('fade-out-and-remove');
+        habitCard.addEventListener('transitionend', () => {
+            habitCard.remove();
+        });
 
-        // Complete the habit for today
-        await api.post(`/habits/${habitId}/complete`, {
-            date: new Date(),
-            value: 1, // Assuming 1 represents completion
-            notes: 'Completed via UI'
-        })
-
-        // Refresh the page to show updated data
-        location.reload()
     } catch (error) {
-        console.error('Error completing habit:', error.response?.data || error.message)
+        console.error('Error deleting habit:', error.response?.data || error.message);
         if (error.response?.status === 401) {
             // Token expired or invalid, redirect to login
-            localStorage.removeItem('authToken')
-            localStorage.removeItem('user')
-            window.location.reload()
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+            window.location.reload();
         } else {
-            alert('Failed to complete habit. Please try again.')
+            alert('Failed to delete habit. Please try again.');
         }
     }
-} 
+}; 

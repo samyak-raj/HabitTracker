@@ -5,8 +5,7 @@ import {
     getHabitsByUser,
     getHabitById,
     updateHabit,
-    deleteHabit,
-    completeHabit
+    deleteHabit
 } from '../controllers/habitController.js';
 
 const router = express.Router();
@@ -20,6 +19,5 @@ router.get('/user', getHabitsByUser);
 router.get('/:id', getHabitById);
 router.put('/:id', updateHabit);
 router.delete('/:id', deleteHabit);
-router.post('/:id/complete', completeHabit);
 
 export default router; 

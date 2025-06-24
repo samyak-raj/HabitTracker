@@ -1,4 +1,5 @@
 import './landing.css'
+import axios from 'axios'
 
 // Google OAuth configuration
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
@@ -50,26 +51,22 @@ function initializeGoogleOAuth() {
 // Handle Google sign in
 async function handleGoogleSignIn(response) {
   try {
-    const result = await fetch(`${API_BASE_URL}/users/auth/google`, {
-      method: 'POST',
+    const result = await axios.post(`${API_BASE_URL}/users/auth/google`, {
+      token: response.credential
+    }, {
       headers: {
         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ token: response.credential })
+      }
     })
 
-    if (!result.ok) {
-      throw new Error('Authentication failed')
-    }
-
-    const data = await result.json()
+    const data = result.data
 
     // Store authentication data
     localStorage.setItem('authToken', data.token)
     localStorage.setItem('user', JSON.stringify(data.user))
 
-    // Reload the page to show the home page
-    window.location.reload()
+    // Redirect to dashboard
+    window.location.href = '/dashboard.html'
   } catch (error) {
     console.error('Sign in error:', error)
     alert('Sign in failed. Please try again.')

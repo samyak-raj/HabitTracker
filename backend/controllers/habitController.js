@@ -17,6 +17,7 @@ export const createHabit = async (req, res) => {
     }
 };
 
+
 // Get all habits for a user
 export const getHabitsByUser = async (req, res) => {
     try {
@@ -27,6 +28,8 @@ export const getHabitsByUser = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
+
+
 
 // Get a habit by ID
 export const getHabitById = async (req, res) => {
@@ -86,48 +89,6 @@ export const deleteHabit = async (req, res) => {
         res.json({ message: 'Habit deleted' });
     } catch (error) {
         console.error('Error deleting habit:', error);
-        res.status(400).json({ message: error.message });
-    }
-};
-
-// Complete a habit
-export const completeHabit = async (req, res) => {
-    try {
-        const habit = await Habit.findById(req.params.id);
-        if (!habit) {
-            return res.status(404).json({ message: 'Habit not found' });
-        }
-
-        // Check if the habit belongs to the authenticated user
-        if (habit.user.toString() !== req.user._id.toString()) {
-            return res.status(403).json({ message: 'Access denied' });
-        }
-
-        // Add today's progress
-        const today = new Date();
-        today.setHours(0, 0, 0, 0); // Set to start of day
-
-        // Check if there's already a progress entry for today
-        const existingProgress = habit.progress.find(p => {
-            const progressDate = new Date(p.date);
-            progressDate.setHours(0, 0, 0, 0);
-            return progressDate.getTime() === today.getTime();
-        });
-
-        if (existingProgress) {
-            existingProgress.completed = true;
-        } else {
-            habit.progress.push({
-                date: today,
-                completed: true,
-                value: 1
-            });
-        }
-
-        await habit.save();
-        res.json(habit);
-    } catch (error) {
-        console.error('Error completing habit:', error);
         res.status(400).json({ message: error.message });
     }
 }; 

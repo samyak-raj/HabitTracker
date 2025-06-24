@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HabitTracker Dashboard</title>
+  <link rel="stylesheet" href="/src/components/dashboard/dashboard.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">HabitTracker</div>
+    <div class="user-section">
+      <span class="user-name" id="dashboard-username"></span>
+      <button id="signout-btn" class="btn btn-primary">Sign Out</button>
+    </div>
+  </nav>
+  <main class="home">
+    <div class="welcome-section">
+      <h1 id="dashboard-welcome"></h1>
+      <p>This is your habit dashboard.</p>
+    </div>
+    <div class="habits-section">
+      <div class="habits-header">
+        <h2>Your Habits</h2>
+        <button id="add-habit-btn" class="add-habit-btn">
+          <span class="plus-icon">+</span> Add New Habit
+        </button>
+      </div>
+      <div id="habits-container" class="habits-container">
+        <!-- Habits will be rendered here by JS -->
+      </div>
+    </div>
+  </main>
+  <script type="module" src="/src/components/dashboard/dashboard.js"></script>
+</body>
+</html> 
