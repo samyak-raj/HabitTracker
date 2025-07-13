@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Habits | HabitTracker</title>
+  <link rel="stylesheet" href="/src/components/dashboard/dashboard.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo"><a href="/">HabitTracker</a></div>
+    <button id="navbar-hamburger" class="navbar-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+    </button>
+    <div class="user-section" id="navbar-links">
+      <a href="/dashboard.html" class="btn btn-outline" style="margin-right: 1rem;">Dashboard</a>
+      <a href="/habits.html" class="btn btn-outline" style="margin-right: 1rem;">Habits</a>
+      <button id="signout-btn" class="btn btn-primary">Sign Out</button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <a href="/dashboard.html" class="btn btn-outline">Dashboard</a>
+      <a href="/habits.html" class="btn btn-outline">Habits</a>
+      <button id="signout-btn-mobile" class="btn btn-primary">Sign Out</button>
+    </div>
+  </nav>
+  <main class="home">
+    <div class="habits-section">
+      <div class="habits-header">
+        <h2>Your Habits</h2>
+        <button id="add-habit-btn" class="add-habit-btn">
+          <span class="plus-icon">+</span> Add New Habit
+        </button>
+      </div>
+      <div id="habits-container" class="habits-container">
+        <!-- Habits will be rendered here by JS -->
+      </div>
+    </div>
+  </main>
+  <script type="module" src="/src/components/dashboard/dashboard.js"></script>
+</body>
+</html> 

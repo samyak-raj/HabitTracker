@@ -108,6 +108,7 @@
     color: #64748b;
 }
 
+.modal-actions,
 .form-actions {
     display: flex;
     justify-content: flex-end;
@@ -116,7 +117,8 @@
 }
 
 .cancel-btn,
-.submit-btn {
+.submit-btn,
+.confirm-delete-btn {
     padding: 0.75rem 1.5rem;
     border-radius: 6px;
     font-size: 1rem;
@@ -144,6 +146,16 @@
     background: #4338ca;
 }
 
+.confirm-delete-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+}
+
+.confirm-delete-btn:hover {
+    background: #dc2626;
+}
+
 .success-message,
 .error-message {
     padding: 1rem;
@@ -162,6 +174,27 @@
     color: white;
 }
 
+.modal-body {
+    margin-bottom: 1.5rem;
+}
+
+.modal-body p {
+    color: #475569;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.difficulty {
+    color: #3b82f6;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
 @media (max-width: 640px) {
     .modal-content {
         width: 95%;
@@ -169,6 +202,10 @@
     }
 
     .form-actions {
+        flex-direction: column;
+    }
+
+    .modal-actions {
         flex-direction: column;
     }
 

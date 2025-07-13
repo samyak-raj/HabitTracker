@@ -18,14 +18,17 @@ export const googleAuth = async (req, res) => {
             idToken: token,
             audience: process.env.GOOGLE_CLIENT_ID
         });
-        
+
         const payload = ticket.getPayload();
-        
+
         // Ensure we extract values properly and convert to strings
         const googleId = String(payload.sub);
         const email = payload.email;
         const name = payload.name;
         const picture = payload.picture;
+
+        // Remove size parameters from Google profile picture URL
+        const highResPicture = picture ? picture.replace(/=s\d+-c$/, '') : null;
 
         console.log('Google auth data:', { googleId, email, name }); // Debug log
 
@@ -36,28 +39,29 @@ export const googleAuth = async (req, res) => {
         if (!user) {
             user = await User.findOne({ email: email });
             if (user) {
-                // Update the user to add googleId
+                // Update the user to add googleId and profile picture
                 user.googleId = googleId;
+                user.profilePicture = highResPicture;
                 await user.save();
-                console.log('Updated existing user with googleId');
+                console.log('Updated existing user with googleId and profile picture');
             }
         }
 
         // 3. If still not found, create a new user
         if (!user) {
             let username = name || email.split('@')[0];
-            
+
             // Check if username already exists to avoid conflicts
             const existingUsername = await User.findOne({ username: username });
             if (existingUsername) {
                 username = `${username}_${Date.now()}`;
             }
-            
+
             user = new User({
                 googleId: googleId,
                 email: email,
                 username: username,
-                profilePicture: picture
+                profilePicture: highResPicture
             });
             await user.save();
             console.log('Created new user');
@@ -79,30 +83,30 @@ export const googleAuth = async (req, res) => {
         });
     } catch (error) {
         console.error('Google auth error:', error);
-        
+
         // Handle duplicate key errors
         if (error.code === 11000) {
             const field = Object.keys(error.keyPattern || {})[0] || 'field';
-            return res.status(409).json({ 
-                error: `A user with this ${field} already exists.` 
+            return res.status(409).json({
+                error: `A user with this ${field} already exists.`
             });
         }
-        
+
         // Handle cast errors
         if (error.name === 'CastError') {
             console.error('Cast error details:', error);
-            return res.status(400).json({ 
-                error: 'Invalid data format in authentication' 
+            return res.status(400).json({
+                error: 'Invalid data format in authentication'
             });
         }
-        
+
         // Handle validation errors
         if (error.name === 'ValidationError') {
-            return res.status(400).json({ 
-                error: 'Invalid user data provided' 
+            return res.status(400).json({
+                error: 'Invalid user data provided'
             });
         }
-        
+
         res.status(500).json({ error: 'Authentication failed' });
     }
 };
@@ -117,7 +121,10 @@ export const getCurrentUser = async (req, res) => {
             username: user.username,
             profilePicture: user.profilePicture,
             level: user.level,
-            experience: user.experience
+            experience: user.experience,
+            currentStreak: user.currentStreak,
+            longestStreak: user.longestStreak,
+            lastCompletedDate: user.lastCompletedDate
         });
     } catch (error) {
         console.error('Get current user error:', error);
@@ -138,7 +145,10 @@ export const getUserById = async (req, res) => {
             username: user.username,
             profilePicture: user.profilePicture,
             level: user.level,
-            experience: user.experience
+            experience: user.experience,
+            currentStreak: user.currentStreak,
+            longestStreak: user.longestStreak,
+            lastCompletedDate: user.lastCompletedDate
         });
     } catch (err) {
         console.error('Error in getUserById:', err);
@@ -149,7 +159,12 @@ export const getUserById = async (req, res) => {
 // Update a user
 export const updateUser = async (req, res) => {
     try {
-        const user = await User.findByIdAndUpdate(req.user._id, req.body, { new: true });
+        let updateData = { ...req.body };
+        if (req.file) {
+            // Serve from /profile-pics/ relative to backend/public
+            updateData.profilePicture = `/profile-pics/${req.file.filename}`;
+        }
+        const user = await User.findByIdAndUpdate(req.user._id, updateData, { new: true });
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }

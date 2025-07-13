@@ -8,28 +8,67 @@
 </head>
 <body>
   <nav class="navbar">
-    <div class="logo">HabitTracker</div>
-    <div class="user-section">
-      <span class="user-name" id="dashboard-username"></span>
+    <div class="logo"><a href="/">HabitTracker</a></div>
+    <button id="navbar-hamburger" class="navbar-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+    </button>
+    <div class="user-section" id="navbar-links">
+      <a href="/dashboard.html" class="btn btn-outline" style="margin-right: 1rem;">Dashboard</a>
+      <a href="/habits.html" class="btn btn-outline" style="margin-right: 1rem;">Habits</a>
       <button id="signout-btn" class="btn btn-primary">Sign Out</button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <a href="/dashboard.html" class="btn btn-outline">Dashboard</a>
+      <a href="/habits.html" class="btn btn-outline">Habits</a>
+      <button id="signout-btn-mobile" class="btn btn-primary">Sign Out</button>
     </div>
   </nav>
   <main class="home">
     <div class="welcome-section">
-      <h1 id="dashboard-welcome"></h1>
-      <p>This is your habit dashboard.</p>
-    </div>
-    <div class="habits-section">
-      <div class="habits-header">
-        <h2>Your Habits</h2>
-        <button id="add-habit-btn" class="add-habit-btn">
-          <span class="plus-icon">+</span> Add New Habit
-        </button>
+      <div class="profile-container">
+        <div class="profile-picture">
+          <img id="user-profile-pic" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiByeD0iNjAiIGZpbGw9IiNFMkU4RjAiLz4KPGNpcmNsZSBjeD0iNjAiIGN5PSI0NSIgcj0iMjAiIGZpbGw9IiM5Q0EzQUYiLz4KPHBhdGggZD0iTTIwIDEwNUMyMCA5NS4wNTc2IDI4LjA1NzYgODcgMzggODdIODJDNzEuOTQyNCA4NyA2NCA5NS4wNTc2IDY0IDEwNVYxMTVIMjBWMTEwNVoiIGZpbGw9IiM5Q0EzQUYiLz4KPC9zdmc+" alt="Profile Picture" referrerpolicy="no-referrer" />
+          <button id="edit-profile-btn" class="edit-profile-btn" title="Edit Profile" style="background:none;border:none;cursor:pointer;position:absolute;top:5px;right:5px;">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 14.5V18H5.5L14.873 8.62701L11.373 5.12701L2 14.5Z" stroke="#555" stroke-width="2"/>
+              <path d="M17.8047 6.19531C18.0651 5.93487 18.0651 5.51276 17.8047 5.25232L15.7477 3.19531C15.4872 2.93487 15.0651 2.93487 14.8047 3.19531L13.127 4.87301L16.627 8.37301L17.8047 6.19531Z" stroke="#555" stroke-width="2"/>
+            </svg>
+          </button>
+        </div>
+        <div class="profile-info">
+          <h2 id="user-name">Loading...</h2>
+          <div class="level-info">
+            <span class="level">Level <span id="user-level">1</span></span>
+            <div class="experience-bar">
+              <div class="experience-fill" id="experience-fill"></div>
+            </div>
+            <span class="experience-text"><span id="current-xp">0</span> / <span id="next-level-xp">100</span> XP</span>
+          </div>
+        </div>
       </div>
-      <div id="habits-container" class="habits-container">
-        <!-- Habits will be rendered here by JS -->
-      </div>
     </div>
+    <!-- Dashboard Stats Section (separated) -->
+    <section id="dashboard-stats" class="dashboard-stats-section">
+      <h3>Stats</h3>
+      <div class="dashboard-stats-row">
+        <div class="stat-box">
+          <span class="stat-label">Current Streak</span>
+          <span class="stat-value" id="current-streak">0</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-label">Longest Streak</span>
+          <span class="stat-value" id="longest-streak">0</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-label">Pending Tasks</span>
+          <span class="stat-value" id="pending-tasks">0</span>
+        </div>
+      </div>
+    </section>
+    <!-- Edit Profile Modal Placeholder -->
+    <div id="edit-profile-modal-root"></div>
   </main>
   <script type="module" src="/src/components/dashboard/dashboard.js"></script>
 </body>

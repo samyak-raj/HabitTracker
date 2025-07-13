@@ -53,11 +53,11 @@ export function showAddHabitModal() {
                 </div>
                 
                 <div class="form-group">
-                    <label for="habit-frequency">Frequency</label>
-                    <select id="habit-frequency" name="frequency" required>
-                        <option value="daily" selected>Daily</option>
-                        <option value="weekly">Weekly</option>
-                        <option value="monthly">Monthly</option>
+                    <label for="habit-difficulty">Difficulty</label>
+                    <select id="habit-difficulty" name="difficulty" required>
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
                     </select>
                 </div>
                 
@@ -103,7 +103,7 @@ export function showAddHabitModal() {
             title: form.querySelector('#habit-title').value,
             description: form.querySelector('#habit-description').value,
             category: form.querySelector('#habit-category').value,
-            frequency: form.querySelector('#habit-frequency').value
+            difficulty: form.querySelector('#habit-difficulty').value
         }
 
         try {
@@ -120,7 +120,7 @@ export function showAddHabitModal() {
                 closeModal()
                 // Refresh the page to show the new habit
                 location.reload()
-            }, 1500)
+            }, 500)
 
         } catch (error) {
             console.error('Error creating habit:', error.response?.data || error.message)

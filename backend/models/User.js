@@ -25,7 +25,20 @@ const userSchema = new mongoose.Schema({
     experience: {
         type: Number,
         default: 0,
-    }
+    },
+    // Streak tracking fields (user-wide)
+    currentStreak: {
+        type: Number,
+        default: 0,
+    },
+    longestStreak: {
+        type: Number,
+        default: 0,
+    },
+    lastCompletedDate: {
+        type: Date,
+        default: null,
+    },
 }, {
     timestamps: true,
 });
@@ -41,7 +54,8 @@ userSchema.methods.addExperience = function (amount) {
 
     // Check for level up
     while (this.experience >= this.experienceToNextLevel) {
-        this.experience -= this.experienceToNextLevel;
+        const requiredXP = this.experienceToNextLevel; // Store before incrementing level
+        this.experience -= requiredXP;
         this.level += 1;
     }
 

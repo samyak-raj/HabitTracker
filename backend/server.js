@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import connectDB from './db/connectDB.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import path from 'path';
 
 import userRoutes from './routes/userRoutes.js';
 import habitRoutes from './routes/habitRoutes.js';
@@ -23,6 +24,9 @@ app.use(express.json());
 app.use('/api/users', userRoutes);
 app.use('/api/habits', habitRoutes);
 
+// Serve profile pictures statically
+app.use('/profile-pics', express.static(path.join(process.cwd(), 'backend', 'public', 'profile-pics')));
+
 // Environment variable checks
 if (!process.env.JWT_SECRET) {
     console.error('JWT_SECRET is not set in environment variables');
@@ -39,4 +43,3 @@ app.listen(PORT, () => {
     connectDB();
     console.log(`Server is running on port ${PORT}`);
 });
-// Add this to your server startup code temporarily

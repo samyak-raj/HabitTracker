@@ -20,14 +20,15 @@ const habitSchema = new mongoose.Schema({
         enum: ['health', 'fitness', 'learning', 'productivity', 'mindfulness', 'other'],
         default: 'other',
     },
-    frequency: {
+    difficulty: {
         type: String,
-        enum: ['daily', 'weekly', 'monthly'],
-        default: 'daily',
+        enum: ['easy', 'medium', 'hard'],
+        default: 'easy',
+        required: true,
     },
     experiencePoints: {
         type: Number,
-        default: 10,
+        // Will be set automatically based on difficulty
     },
     status: {
         type: String,
@@ -77,6 +78,26 @@ habitSchema.methods.getCompletionRate = function () {
 habitSchema.statics.findByUser = function (userId) {
     return this.find({ user: userId }).sort({ createdAt: -1 });
 };
+
+// Add pre-save hook to set experiencePoints based on difficulty
+habitSchema.pre('save', function (next) {
+    if (this.isModified('difficulty') || this.isNew) {
+        switch (this.difficulty) {
+            case 'easy':
+                this.experiencePoints = 10;
+                break;
+            case 'medium':
+                this.experiencePoints = 20;
+                break;
+            case 'hard':
+                this.experiencePoints = 30;
+                break;
+            default:
+                this.experiencePoints = 10;
+        }
+    }
+    next();
+});
 
 const Habit = mongoose.model('Habit', habitSchema);
 

@@ -54,11 +54,11 @@ export function showEditHabitModal(habit) {
                 </div>
                 
                 <div class="form-group">
-                    <label for="habit-frequency">Frequency</label>
-                    <select id="habit-frequency" name="frequency" required>
-                        <option value="daily" ${habit.frequency === 'daily' ? 'selected' : ''}>Daily</option>
-                        <option value="weekly" ${habit.frequency === 'weekly' ? 'selected' : ''}>Weekly</option>
-                        <option value="monthly" ${habit.frequency === 'monthly' ? 'selected' : ''}>Monthly</option>
+                    <label for="habit-difficulty">Difficulty</label>
+                    <select id="habit-difficulty" name="difficulty" required>
+                        <option value="easy" ${habit.difficulty === 'easy' ? 'selected' : ''}>Easy</option>
+                        <option value="medium" ${habit.difficulty === 'medium' ? 'selected' : ''}>Medium</option>
+                        <option value="hard" ${habit.difficulty === 'hard' ? 'selected' : ''}>Hard</option>
                     </select>
                 </div>
                 
@@ -104,7 +104,7 @@ export function showEditHabitModal(habit) {
             title: form.querySelector('#habit-title').value,
             description: form.querySelector('#habit-description').value,
             category: form.querySelector('#habit-category').value,
-            frequency: form.querySelector('#habit-frequency').value
+            difficulty: form.querySelector('#habit-difficulty').value
         }
 
         try {
