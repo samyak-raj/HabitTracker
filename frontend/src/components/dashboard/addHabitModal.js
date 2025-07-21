@@ -1,24 +1,7 @@
-import axios from 'axios'
+import api from '../../api'
 import './addHabitModal.css'
 
-const api = axios.create({
-    baseURL: 'http://localhost:5000/api',
-    headers: {
-        'Content-Type': 'application/json'
-    }
-})
-
-// Add request interceptor to include auth token
-api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('authToken')
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`
-    }
-    return config
-})
-
 export function showAddHabitModal() {
-    // Create modal container
     const modalContainer = document.createElement('div')
     modalContainer.className = 'modal-container'
     modalContainer.innerHTML = `
@@ -69,15 +52,12 @@ export function showAddHabitModal() {
         </div>
     `
 
-    // Add modal to the document
     document.body.appendChild(modalContainer)
 
-    // Add event listeners
     const closeBtn = modalContainer.querySelector('.close-btn')
     const cancelBtn = modalContainer.querySelector('.cancel-btn')
     const form = modalContainer.querySelector('#add-habit-form')
 
-    // Close modal functions
     const closeModal = () => {
         modalContainer.classList.add('fade-out')
         setTimeout(() => {
@@ -88,14 +68,12 @@ export function showAddHabitModal() {
     closeBtn.addEventListener('click', closeModal)
     cancelBtn.addEventListener('click', closeModal)
 
-    // Close modal when clicking outside
     modalContainer.addEventListener('click', (e) => {
         if (e.target === modalContainer) {
             closeModal()
         }
     })
 
-    // Handle form submission
     form.addEventListener('submit', async (e) => {
         e.preventDefault()
 
@@ -109,16 +87,13 @@ export function showAddHabitModal() {
         try {
             await api.post('/habits', formData)
 
-            // Show success message
             const successMessage = document.createElement('div')
             successMessage.className = 'success-message'
             successMessage.textContent = 'Habit created successfully!'
             modalContainer.querySelector('.modal-content').prepend(successMessage)
 
-            // Close modal after a short delay
             setTimeout(() => {
                 closeModal()
-                // Refresh the page to show the new habit
                 location.reload()
             }, 500)
 
@@ -126,27 +101,23 @@ export function showAddHabitModal() {
             console.error('Error creating habit:', error.response?.data || error.message)
 
             if (error.response?.status === 401) {
-                // Token expired or invalid, redirect to login
                 localStorage.removeItem('authToken')
                 localStorage.removeItem('user')
                 window.location.reload()
                 return
             }
 
-            // Show error message
             const errorMessage = document.createElement('div')
             errorMessage.className = 'error-message'
             errorMessage.textContent = 'Failed to create habit. Please try again.'
             modalContainer.querySelector('.modal-content').prepend(errorMessage)
 
-            // Remove error message after 3 seconds
             setTimeout(() => {
                 errorMessage.remove()
             }, 3000)
         }
     })
 
-    // Add fade-in animation
     requestAnimationFrame(() => {
         modalContainer.classList.add('fade-in')
     })

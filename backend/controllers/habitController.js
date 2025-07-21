@@ -116,7 +116,10 @@ export const completeHabit = async (req, res) => {
         } else if (!lastCompleted || lastCompleted.getTime() !== today.getTime()) {
             streak = 1;
         }
-        if (streak > longestStreak) longestStreak = streak;
+        // Only update longestStreak if a new record is set
+        if (streak > longestStreak) {
+            longestStreak = streak;
+        }
         user.currentStreak = streak;
         user.longestStreak = longestStreak;
         user.lastCompletedDate = today;

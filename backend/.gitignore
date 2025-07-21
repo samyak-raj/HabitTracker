@@ -66,3 +66,5 @@ coverage
 # Temporary files
 tmp/
 temp/ 
+# Ignore profile-pics only in the correct location if needed
+# /backend/public/profile-pics/ 

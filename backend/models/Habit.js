@@ -54,31 +54,6 @@ const habitSchema = new mongoose.Schema({
     timestamps: true,
 });
 
-// Method to update progress
-habitSchema.methods.updateProgress = async function (date, value, notes = '') {
-    const progressEntry = {
-        date: new Date(date),
-        completed: value >= this.target,
-        value,
-        notes,
-    };
-
-    this.progress.push(progressEntry);
-    return this.save();
-};
-
-// Method to get completion rate
-habitSchema.methods.getCompletionRate = function () {
-    if (this.progress.length === 0) return 0;
-    const completed = this.progress.filter(p => p.completed).length;
-    return (completed / this.progress.length) * 100;
-};
-
-// Static method to find habits by user
-habitSchema.statics.findByUser = function (userId) {
-    return this.find({ user: userId }).sort({ createdAt: -1 });
-};
-
 // Add pre-save hook to set experiencePoints based on difficulty
 habitSchema.pre('save', function (next) {
     if (this.isModified('difficulty') || this.isNew) {

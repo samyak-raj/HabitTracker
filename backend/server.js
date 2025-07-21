@@ -13,6 +13,8 @@ import habitRoutes from './routes/habitRoutes.js';
 dotenv.config();
 const app = express();
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 // Middleware
 app.use(cors({
     origin: 'http://localhost:5173', // Your frontend URL
@@ -25,7 +27,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/habits', habitRoutes);
 
 // Serve profile pictures statically
-app.use('/profile-pics', express.static(path.join(process.cwd(), 'backend', 'public', 'profile-pics')));
+app.use('/profile-pics', express.static(path.join(__dirname, 'public', 'profile-pics')));
 
 // Environment variable checks
 if (!process.env.JWT_SECRET) {

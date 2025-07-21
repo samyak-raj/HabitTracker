@@ -1,9 +1,8 @@
 import './landing.css'
-import axios from 'axios'
+import api from '../../api'
 
 // Google OAuth configuration
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
-const API_BASE_URL = 'http://localhost:5000/api'
 
 // Initialize Google OAuth
 function initializeGoogleOAuth() {
@@ -51,7 +50,7 @@ function initializeGoogleOAuth() {
 // Handle Google sign in
 async function handleGoogleSignIn(response) {
   try {
-    const result = await axios.post(`${API_BASE_URL}/users/auth/google`, {
+    const result = await api.post('/users/auth/google', {
       token: response.credential
     }, {
       headers: {
@@ -76,7 +75,7 @@ async function handleGoogleSignIn(response) {
 export default function initializeLanding() {
   document.getElementById('app').innerHTML = `
     <nav class="navbar">
-      <div class="logo">HabitTracker</div>
+      <div class="logo">HabitHero</div>
       <div class="auth-buttons">
         <div class="google-btn-wrapper">
           <button class="btn btn-primary">Sign in with Google</button>
@@ -84,11 +83,10 @@ export default function initializeLanding() {
         </div>
       </div>
     </nav>
-
     <main class="hero">
       <div class="hero-content">
         <h1>Build Better Habits,<br>One Day at a Time</h1>
-        <p class="subtitle">Track your habits, build streaks, and transform your life with our simple and effective habit tracking system.</p>
+        <p class="subtitle">Track, gamify, and level up your daily routines with HabitHero.</p>
         <div class="google-btn-wrapper">
           <button class="btn btn-primary btn-large">Get Started</button>
           <div id="get-started-hero-btn"></div>
@@ -97,32 +95,31 @@ export default function initializeLanding() {
       <div class="hero-image">
         <div class="feature-grid">
           <div class="feature-item">
-            <span class="feature-icon">📊</span>
-            <h3>Track Progress</h3>
-            <p>Monitor your daily habits and see your progress over time</p>
+            <span class="feature-icon">⭐</span>
+            <h3>XP & Leveling</h3>
+            <p>Earn experience points for every habit you complete and level up as you grow!</p>
           </div>
           <div class="feature-item">
             <span class="feature-icon">🔥</span>
-            <h3>Build Streaks</h3>
-            <p>Maintain your momentum with streak tracking</p>
+            <h3>Streaks</h3>
+            <p>Build and maintain streaks to stay motivated and consistent every day.</p>
           </div>
           <div class="feature-item">
-            <span class="feature-icon">🎯</span>
-            <h3>Set Goals</h3>
-            <p>Define clear goals and track your achievements</p>
+            <span class="feature-icon">🦸‍♂️</span>
+            <h3>Profile & Avatar</h3>
+            <p>Personalize your profile, upload an avatar, and show off your progress.</p>
           </div>
           <div class="feature-item">
-            <span class="feature-icon">📱</span>
-            <h3>Stay Motivated</h3>
-            <p>Get reminders and stay on track with your habits</p>
+            <span class="feature-icon">🔐</span>
+            <h3>Google Sign-In</h3>
+            <p>Sign up or log in instantly and securely with your Google account.</p>
           </div>
         </div>
       </div>
     </main>
-  `
-
-  // Initialize Google OAuth
-  initializeGoogleOAuth()
+  `;
+  initializeGoogleOAuth();
 }
+
 
 

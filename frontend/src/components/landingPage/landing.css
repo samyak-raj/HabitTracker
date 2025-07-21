@@ -3,7 +3,7 @@
     --primary-hover: #4338ca;
     --text-color: #1f2937;
     --text-light: #6b7280;
-    --background: #ffffff;
+    --background: #fffff;
     --background-alt: #f9fafb;
     --border-color: #e5e7eb;
 }
@@ -116,6 +116,13 @@ body {
     padding: 1.5rem;
     border-radius: 0.5rem;
     text-align: center;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.feature-item:hover {
+    box-shadow: 0 4px 24px rgba(79, 70, 229, 0.12), 0 1.5px 6px rgba(31, 41, 55, 0.08);
+    transform: translateY(-4px) scale(1.03);
+    cursor: pointer;
 }
 
 .feature-icon {

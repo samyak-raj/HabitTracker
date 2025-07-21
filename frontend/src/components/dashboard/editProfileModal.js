@@ -1,31 +1,31 @@
-// Edit Profile Modal
+import api from '../../api'
 export function showEditProfileModal({ username, profilePicture, onUpdate, onCancel }) {
-    // Remove any existing modal
-    const existing = document.getElementById('edit-profile-modal');
-    if (existing) existing.remove();
+  // Remove any existing modal
+  const existing = document.getElementById('edit-profile-modal');
+  if (existing) existing.remove();
 
-    const backendBaseUrl = 'http://localhost:5000';
+  const backendBaseUrl = 'http://localhost:5000';
 
-    // Ensure correct profile picture URL
-    const picUrl = profilePicture && !profilePicture.startsWith('http')
-        ? backendBaseUrl + profilePicture
-        : profilePicture || '';
+  // Ensure correct profile picture URL
+  const picUrl = profilePicture && !profilePicture.startsWith('http')
+    ? backendBaseUrl + profilePicture
+    : profilePicture || '';
 
-    // Modal HTML
-    const modal = document.createElement('div');
-    modal.id = 'edit-profile-modal';
-    modal.style.position = 'fixed';
-    modal.style.top = '0';
-    modal.style.left = '0';
-    modal.style.width = '100vw';
-    modal.style.height = '100vh';
-    modal.style.background = 'rgba(0,0,0,0.4)';
-    modal.style.display = 'flex';
-    modal.style.alignItems = 'center';
-    modal.style.justifyContent = 'center';
-    modal.style.zIndex = '9999';
+  // Modal HTML
+  const modal = document.createElement('div');
+  modal.id = 'edit-profile-modal';
+  modal.style.position = 'fixed';
+  modal.style.top = '0';
+  modal.style.left = '0';
+  modal.style.width = '100vw';
+  modal.style.height = '100vh';
+  modal.style.background = 'rgba(0,0,0,0.4)';
+  modal.style.display = 'flex';
+  modal.style.alignItems = 'center';
+  modal.style.justifyContent = 'center';
+  modal.style.zIndex = '9999';
 
-    modal.innerHTML = `
+  modal.innerHTML = `
     <div style="background: #fff; border-radius: 12px; padding: 2rem; min-width: 320px; max-width: 90vw; box-shadow: 0 4px 24px rgba(0,0,0,0.15); position: relative;">
       <h2 style="margin-bottom: 1rem;">Edit Profile</h2>
       <form id="edit-profile-form">
@@ -42,35 +42,35 @@ export function showEditProfileModal({ username, profilePicture, onUpdate, onCan
     </div>
   `;
 
-    // Add to DOM
-    document.getElementById('edit-profile-modal-root').appendChild(modal);
+  // Add to DOM
+  document.getElementById('edit-profile-modal-root').appendChild(modal);
 
-    // Handle file preview
-    const fileInput = modal.querySelector('#edit-profile-pic-input');
-    const previewImg = modal.querySelector('#edit-profile-pic-preview');
-    fileInput.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (ev) => {
-                previewImg.src = ev.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    });
+  // Handle file preview
+  const fileInput = modal.querySelector('#edit-profile-pic-input');
+  const previewImg = modal.querySelector('#edit-profile-pic-preview');
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        previewImg.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
 
-    // Handle cancel
-    modal.querySelector('#edit-profile-cancel-btn').onclick = () => {
-        modal.remove();
-        if (onCancel) onCancel();
-    };
+  // Handle cancel
+  modal.querySelector('#edit-profile-cancel-btn').onclick = () => {
+    modal.remove();
+    if (onCancel) onCancel();
+  };
 
-    // Handle submit
-    modal.querySelector('#edit-profile-form').onsubmit = (e) => {
-        e.preventDefault();
-        const newUsername = modal.querySelector('#edit-username-input').value.trim();
-        const newPicFile = fileInput.files[0] || null;
-        if (onUpdate) onUpdate({ username: newUsername, profilePictureFile: newPicFile });
-        modal.remove();
-    };
+  // Handle submit
+  modal.querySelector('#edit-profile-form').onsubmit = (e) => {
+    e.preventDefault();
+    const newUsername = modal.querySelector('#edit-username-input').value.trim();
+    const newPicFile = fileInput.files[0] || null;
+    if (onUpdate) onUpdate({ username: newUsername, profilePictureFile: newPicFile });
+    modal.remove();
+  };
 } 

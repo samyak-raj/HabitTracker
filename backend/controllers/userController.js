@@ -30,8 +30,6 @@ export const googleAuth = async (req, res) => {
         // Remove size parameters from Google profile picture URL
         const highResPicture = picture ? picture.replace(/=s\d+-c$/, '') : null;
 
-        console.log('Google auth data:', { googleId, email, name }); // Debug log
-
         // 1. Try to find user by googleId (now properly as a string)
         let user = await User.findOne({ googleId: googleId });
 
@@ -43,7 +41,6 @@ export const googleAuth = async (req, res) => {
                 user.googleId = googleId;
                 user.profilePicture = highResPicture;
                 await user.save();
-                console.log('Updated existing user with googleId and profile picture');
             }
         }
 
@@ -64,7 +61,6 @@ export const googleAuth = async (req, res) => {
                 profilePicture: highResPicture
             });
             await user.save();
-            console.log('Created new user');
         }
 
         // Generate JWT token
@@ -115,6 +111,22 @@ export const googleAuth = async (req, res) => {
 export const getCurrentUser = async (req, res) => {
     try {
         const user = req.user;
+        // Streak reset logic
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const yesterday = new Date(today);
+        yesterday.setDate(today.getDate() - 1);
+        let lastCompleted = user.lastCompletedDate ? new Date(user.lastCompletedDate) : null;
+        if (lastCompleted) lastCompleted.setHours(0, 0, 0, 0);
+        if (
+            !lastCompleted ||
+            (lastCompleted.getTime() !== today.getTime() && lastCompleted.getTime() !== yesterday.getTime())
+        ) {
+            if (user.currentStreak !== 0) {
+                user.currentStreak = 0;
+                await user.save();
+            }
+        }
         res.json({
             id: user._id,
             email: user.email,
@@ -139,6 +151,22 @@ export const getUserById = async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
+        // Streak reset logic
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const yesterday = new Date(today);
+        yesterday.setDate(today.getDate() - 1);
+        let lastCompleted = user.lastCompletedDate ? new Date(user.lastCompletedDate) : null;
+        if (lastCompleted) lastCompleted.setHours(0, 0, 0, 0);
+        if (
+            !lastCompleted ||
+            (lastCompleted.getTime() !== today.getTime() && lastCompleted.getTime() !== yesterday.getTime())
+        ) {
+            if (user.currentStreak !== 0) {
+                user.currentStreak = 0;
+                await user.save();
+            }
+        }
         res.json({
             id: user._id,
             email: user.email,
@@ -161,8 +189,11 @@ export const updateUser = async (req, res) => {
     try {
         let updateData = { ...req.body };
         if (req.file) {
-            // Serve from /profile-pics/ relative to backend/public
             updateData.profilePicture = `/profile-pics/${req.file.filename}`;
+        }
+        // Only allow updating currentStreak unless longestStreak is explicitly provided
+        if (!('longestStreak' in updateData)) {
+            delete updateData.longestStreak;
         }
         const user = await User.findByIdAndUpdate(req.user._id, updateData, { new: true });
         if (!user) {
@@ -174,7 +205,10 @@ export const updateUser = async (req, res) => {
             username: user.username,
             profilePicture: user.profilePicture,
             level: user.level,
-            experience: user.experience
+            experience: user.experience,
+            currentStreak: user.currentStreak,
+            longestStreak: user.longestStreak,
+            lastCompletedDate: user.lastCompletedDate
         });
     } catch (err) {
         console.error('Error in updateUser:', err);

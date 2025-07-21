@@ -1,10 +1,9 @@
 import './addHabitModal.css' // Reusing styles for consistency
 
 export function showDeleteConfirmationModal(habitId, onConfirm) {
-    // Create modal container
-    const modalContainer = document.createElement('div')
-    modalContainer.className = 'modal-container'
-    modalContainer.innerHTML = `
+  const modalContainer = document.createElement('div')
+  modalContainer.className = 'modal-container'
+  modalContainer.innerHTML = `
     <div class="modal-content">
       <div class="modal-header">
         <h2>Confirm Deletion</h2>
@@ -20,35 +19,35 @@ export function showDeleteConfirmationModal(habitId, onConfirm) {
     </div>
   `
 
-    document.body.appendChild(modalContainer)
+  document.body.appendChild(modalContainer)
 
-    const closeBtn = modalContainer.querySelector('.close-btn')
-    const cancelBtn = modalContainer.querySelector('.cancel-btn')
-    const confirmBtn = modalContainer.querySelector('.confirm-delete-btn')
+  const closeBtn = modalContainer.querySelector('.close-btn')
+  const cancelBtn = modalContainer.querySelector('.cancel-btn')
+  const confirmBtn = modalContainer.querySelector('.confirm-delete-btn')
 
-    const closeModal = () => {
-        modalContainer.classList.add('fade-out')
-        setTimeout(() => {
-            if (document.body.contains(modalContainer)) {
-                document.body.removeChild(modalContainer)
-            }
-        }, 300)
+  const closeModal = () => {
+    modalContainer.classList.add('fade-out')
+    setTimeout(() => {
+      if (document.body.contains(modalContainer)) {
+        document.body.removeChild(modalContainer)
+      }
+    }, 300)
+  }
+
+  closeBtn.addEventListener('click', closeModal)
+  cancelBtn.addEventListener('click', closeModal)
+  modalContainer.addEventListener('click', (e) => {
+    if (e.target === modalContainer) {
+      closeModal()
     }
+  })
 
-    closeBtn.addEventListener('click', closeModal)
-    cancelBtn.addEventListener('click', closeModal)
-    modalContainer.addEventListener('click', (e) => {
-        if (e.target === modalContainer) {
-            closeModal()
-        }
-    })
+  confirmBtn.addEventListener('click', () => {
+    onConfirm(habitId)
+    closeModal()
+  })
 
-    confirmBtn.addEventListener('click', () => {
-        onConfirm(habitId)
-        closeModal()
-    })
-
-    requestAnimationFrame(() => {
-        modalContainer.classList.add('fade-in')
-    })
+  requestAnimationFrame(() => {
+    modalContainer.classList.add('fade-in')
+  })
 } 

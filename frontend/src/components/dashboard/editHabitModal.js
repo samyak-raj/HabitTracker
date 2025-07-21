@@ -1,24 +1,7 @@
-import axios from 'axios'
+import api from '../../api'
 import './addHabitModal.css' // Reuse the same styles
 
-const api = axios.create({
-    baseURL: 'http://localhost:5000/api',
-    headers: {
-        'Content-Type': 'application/json'
-    }
-})
-
-// Add request interceptor to include auth token
-api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('authToken')
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`
-    }
-    return config
-})
-
 export function showEditHabitModal(habit) {
-    // Create modal container
     const modalContainer = document.createElement('div')
     modalContainer.className = 'modal-container'
     modalContainer.innerHTML = `
@@ -70,15 +53,12 @@ export function showEditHabitModal(habit) {
         </div>
     `
 
-    // Add modal to the document
     document.body.appendChild(modalContainer)
 
-    // Add event listeners
     const closeBtn = modalContainer.querySelector('.close-btn')
     const cancelBtn = modalContainer.querySelector('.cancel-btn')
     const form = modalContainer.querySelector('#edit-habit-form')
 
-    // Close modal functions
     const closeModal = () => {
         modalContainer.classList.add('fade-out')
         setTimeout(() => {
@@ -89,14 +69,12 @@ export function showEditHabitModal(habit) {
     closeBtn.addEventListener('click', closeModal)
     cancelBtn.addEventListener('click', closeModal)
 
-    // Close modal when clicking outside
     modalContainer.addEventListener('click', (e) => {
         if (e.target === modalContainer) {
             closeModal()
         }
     })
 
-    // Handle form submission
     form.addEventListener('submit', async (e) => {
         e.preventDefault()
 
@@ -147,7 +125,6 @@ export function showEditHabitModal(habit) {
         }
     })
 
-    // Add fade-in animation
     requestAnimationFrame(() => {
         modalContainer.classList.add('fade-in')
     })
