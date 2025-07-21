@@ -4,10 +4,15 @@ This document provides an overview of the database schema for the HabitHero appl
 
 ## User Model (`models/User.js`)
 
-- **`username`**: (String, required, unique) - The user's chosen username.
-- **`email`**: (String, required, unique) - The user's email address, used for login.
-- **`password`**: (String, required) - The user's hashed password.
-- **`profilePicture`**: (String) - The path to the user's profile picture.
+- **`googleId`**: (String, required, unique) - The user's unique Google ID.
+- **`email`**: (String, required, unique) - The user's email address.
+- **`username`**: (String, required) - The user's display name.
+- **`profilePicture`**: (String) - The URL to the user's profile picture.
+- **`level`**: (Number, default: 1) - The user's current level.
+- **`experience`**: (Number, default: 0) - The user's current experience points.
+- **`currentStreak`**: (Number, default: 0) - The user's current daily login streak.
+- **`longestStreak`**: (Number, default: 0) - The user's longest daily login streak.
+- **`lastCompletedDate`**: (Date) - The date the user last completed a daily goal.
 
 ## Habit Model (`models/Habit.js`)
 

@@ -1,49 +1,25 @@
 # Authentication Flow
 
-This document explains the authentication process in the HabitHero application.
+This document explains the authentication process in the HabitHero application, which uses Google OAuth2.
 
-## User Registration
+## Google OAuth2 Authentication
 
-- **Endpoint**: `POST /api/users/register`
-- **Controller**: `userController.js` -> `registerUser`
+- **Endpoint**: `POST /api/users/auth/google`
+- **Controller**: `userController.js` -> `googleAuth`
 - **Description**:
-  - The user provides a `username`, `email`, and `password`.
-  - The password is encrypted using `bcrypt`.
-  - A new `User` object is created and saved to the database.
-  - A JSON Web Token (JWT) is generated and sent back to the user, which is then stored in the browser's local storage.
-
-## User Login
-
-- **Endpoint**: `POST /api/users/login`
-- **Controller**: `userController.js` -> `loginUser`
-- **Description**:
-  - The user provides their `email` and `password`.
-  - The system checks if a user with the given email exists.
-  - If the user exists, the provided password is
-- **Endpoint**: `POST /api/users/login`
-- **Controller**: `userController.js` -> `loginUser`
-- **Description**:
-  - The user provides their `email` and `password`.
-  - The system checks if a user with the given email exists.
-  - If the user exists, the provided password is compared with the hashed password in the database.
-  - If the credentials are correct, a new JWT is generated and sent to the user.
+  - The frontend sends a Google ID token to the backend.
+  - The backend verifies the token using the `google-auth-library`.
+  - The user's `googleId`, `email`, `name`, and `picture` are extracted from the token payload.
+  - The system checks if a user with the `googleId` already exists.
+  - If the user exists, they are logged in.
+  - If the user does not exist, a new user is created with the information from the Google token.
+  - A JSON Web Token (JWT) is generated and sent back to the user, which is then stored in the browser's local storage for session management.
 
 ## Protected Routes
 
 - **Middleware**: `auth.js`
 - **Description**:
-  - Certain routes (e.g., fetching user-specific data) are protected and require a valid JWT.
-  - The `auth` middleware checks for the presence of a token in the request headers.
-  - If the token is valid, the user's information is attached to the request object, and the request is allowed to proceed.
-  - If the token is missing or invalid, an "unauthorized" error is returned.
-  compared with the hashed password in the database.
-  - If the credentials are correct, a new JWT is generated and sent to the user.
-
-## Protected Routes
-
-- **Middleware**: `auth.js`
-- **Description**:
-  - Certain routes (e.g., fetching user-specific data) are protected and require a valid JWT.
-  - The `auth` middleware checks for the presence of a token in the request headers.
+  - Certain routes are protected and require a valid JWT.
+  - The `auth` middleware, checks for the presence of a token in the request headers.
   - If the token is valid, the user's information is attached to the request object, and the request is allowed to proceed.
   - If the token is missing or invalid, an "unauthorized" error is returned.
