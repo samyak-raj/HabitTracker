@@ -17,10 +17,17 @@ This document provides an overview of the database schema for the HabitHero appl
 ## Habit Model (`models/Habit.js`)
 
 - **`user`**: (ObjectId, ref: 'User', required) - A reference to the `User` who owns the habit.
-- **`name`**: (String, required) - The name of the habit (e.g., "Exercise for 30 minutes").
+- **`title`**: (String, required) - The name of the habit.
 - **`description`**: (String) - A more detailed description of the habit.
-- **`streak`**: (Number, default: 0) - The number of consecutive days the habit has been completed.
-- **`lastCompleted`**: (Date) - The date the habit was last marked as complete.
+- **`category`**: (String, enum: ['health', 'fitness', 'learning', 'productivity', 'mindfulness', 'other']) - The category of the habit.
+- **`difficulty`**: (String, enum: ['easy', 'medium', 'hard']) - The difficulty level of the habit.
+- **`experiencePoints`**: (Number) - The experience points awarded for completing the habit, determined by difficulty.
+- **`status`**: (String, enum: ['active', 'completed']) - The current status of the habit.
+- **`progress`**: (Array of Objects) - An array that tracks the daily progress of the habit.
+  - **`date`**: (Date) - The date of the progress entry.
+  - **`completed`**: (Boolean) - Whether the habit was completed on that date.
+  - **`value`**: (Number) - A numerical value for progress, if applicable.
+  - **`notes`**: (String) - Any notes for that day's progress.
 
 ## Relationships
 
