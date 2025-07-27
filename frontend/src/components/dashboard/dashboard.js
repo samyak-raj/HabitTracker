@@ -71,6 +71,14 @@ function setStatValue(id, value) {
   if (el) el.textContent = value;
 }
 
+// Add a function to update the coin display
+function updateUserCoins(coins) {
+  const coinElement = document.getElementById('user-coins');
+  if (coinElement) {
+    coinElement.textContent = coins;
+  }
+}
+
 // Add this after user/profile rendering logic
 function openEditProfileModal(user) {
   showEditProfileModal({
@@ -142,9 +150,11 @@ if (!user) {
     const currentUser = await fetchCurrentUser()
     if (currentUser) {
       renderStatsSummary(currentUser)
+      updateUserCoins(currentUser.coins || 0);
       attachEditProfileBtn(currentUser)
     } else {
       renderStatsSummary(user) // Fallback to localStorage data
+      updateUserCoins(user.coins || 0);
       attachEditProfileBtn(user)
     }
     await updateDashboardStats();

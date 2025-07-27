@@ -129,6 +129,22 @@ export const completeHabit = async (req, res) => {
         const bonusMultiplier = Math.min(1 + 0.1 * (streak - 1), 2);
         const xpGained = Math.round(baseXP * bonusMultiplier);
         await user.addExperience(xpGained);
+
+        // --- Coin Rewards ---
+        let coinsGained = 0;
+        switch (habit.difficulty) {
+            case 'easy':
+                coinsGained = 10;
+                break;
+            case 'medium':
+                coinsGained = 20;
+                break;
+            case 'hard':
+                coinsGained = 30;
+                break;
+        }
+        user.coins = (user.coins || 0) + coinsGained;
+
         await user.save();
         // Delete the habit from the database
         await Habit.findByIdAndDelete(req.params.id);
@@ -139,7 +155,8 @@ export const completeHabit = async (req, res) => {
                 currentStreak: user.currentStreak,
                 longestStreak: user.longestStreak,
                 lastCompletedDate: user.lastCompletedDate,
-                xpGained
+                xpGained,
+                coinsGained,
             }
         });
     } catch (error) {

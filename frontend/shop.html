@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop | HabitTracker</title>
+    <link rel="stylesheet" href="/src/components/dashboard/dashboard.css" />
+    <link rel="stylesheet" href="/src/shop.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo"><a href="/">HabitHero</a></div>
+        <button id="navbar-hamburger" class="navbar-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+        </button>
+        <div class="user-section" id="navbar-links">
+            <a href="/dashboard.html" class="btn btn-outline" style="margin-right: 1rem;">Dashboard</a>
+            <a href="/habits.html" class="btn btn-outline" style="margin-right: 1rem;">Habits</a>
+            <a href="/shop.html" class="btn btn-outline" style="margin-right: 1rem;">Shop</a>
+            <button id="signout-btn" class="btn btn-primary">Sign Out</button>
+        </div>
+        <div class="mobile-menu" id="mobile-menu" hidden>
+            <a href="/dashboard.html" class="btn btn-outline">Dashboard</a>
+            <a href="/habits.html" class="btn btn-outline">Habits</a>
+            <a href="/shop.html" class="btn btn-outline">Shop</a>
+            <button id="signout-btn-mobile" class="btn btn-primary">Sign Out</button>
+        </div>
+    </nav>
+    <main class="home">
+        <div class="shop-section">
+            <div class="shop-header">
+                <h2>Pet Shop</h2>
+                <div class="coin-balance">
+                    <p>&#128178; <span id="coin-count">Loading...</span></p>
+                </div>
+            </div>
+            <div id="shop-container" class="shop-container">
+                <!-- Pet items will be rendered here by JS -->
+                <div class="pet-item">
+                    <h3>Common Pet</h3>
+                    <p>A trusty companion for your journey.</p>
+                    <p>Cost: 100 Coins</p>
+                    <button class="btn btn-primary">Buy</button>
+                </div>
+                <div class="pet-item">
+                    <h3>Rare Pet</h3>
+                    <p>A rare and exotic creature.</p>
+                    <p>Cost: 500 Coins</p>
+                    <button class="btn btn-primary">Buy</button>
+                </div>
+                <div class="pet-item">
+                    <h3>Legendary Pet</h3>
+                    <p>A mythical beast of legend.</p>
+                    <p>Cost: 1000 Coins</p>
+                    <button class="btn btn-primary">Buy</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script type="module" src="/src/shop.js"></script>
+</body>
+</html>

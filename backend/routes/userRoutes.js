@@ -5,7 +5,8 @@ import {
     getCurrentUser,
     getUserById,
     updateUser,
-    deleteUser
+    deleteUser,
+    getUserCoins
 } from '../controllers/userController.js';
 import upload from '../middleware/upload.js';
 
@@ -16,6 +17,7 @@ router.post('/auth/google', googleAuth);
 
 // Protected routes
 router.get('/me', requireAuth, getCurrentUser);
+router.get('/coins', requireAuth, getUserCoins);
 router.get('/:id', requireAuth, getUserById);
 router.put('/me', upload.single('profilePicture'), requireAuth, updateUser);
 router.delete('/me', requireAuth, deleteUser);
