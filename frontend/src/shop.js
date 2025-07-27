@@ -45,4 +45,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         localStorage.removeItem('token');
         redirectToLogin();
     });
+
+    const hamburger = document.getElementById('navbar-hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (hamburger && mobileMenu) {
+        hamburger.addEventListener('click', () => {
+            const isOpen = !mobileMenu.hasAttribute('hidden');
+            if (isOpen) {
+                mobileMenu.setAttribute('hidden', '');
+                hamburger.setAttribute('aria-expanded', 'false');
+            } else {
+                mobileMenu.removeAttribute('hidden');
+                hamburger.setAttribute('aria-expanded', 'true');
+            }
+        });
+    }
 });
