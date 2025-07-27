@@ -144,6 +144,20 @@ export const getCurrentUser = async (req, res) => {
     }
 };
 
+// Get user coins
+export const getUserCoins = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.json({ coins: user.coins });
+    } catch (error) {
+        console.error('Get user coins error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
 // Get a user by ID
 export const getUserById = async (req, res) => {
     try {
