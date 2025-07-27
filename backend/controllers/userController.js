@@ -134,6 +134,7 @@ export const getCurrentUser = async (req, res) => {
             profilePicture: user.profilePicture,
             level: user.level,
             experience: user.experience,
+            coins: user.coins,
             currentStreak: user.currentStreak,
             longestStreak: user.longestStreak,
             lastCompletedDate: user.lastCompletedDate
