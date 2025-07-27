@@ -30,6 +30,10 @@ const habitSchema = new mongoose.Schema({
         type: Number,
         // Will be set automatically based on difficulty
     },
+    coins: {
+        type: Number,
+        // Will be set automatically based on difficulty
+    },
     status: {
         type: String,
         enum: ['active', 'completed'],
@@ -54,21 +58,25 @@ const habitSchema = new mongoose.Schema({
     timestamps: true,
 });
 
-// Add pre-save hook to set experiencePoints based on difficulty
+// Add pre-save hook to set experiencePoints and coins based on difficulty
 habitSchema.pre('save', function (next) {
     if (this.isModified('difficulty') || this.isNew) {
         switch (this.difficulty) {
             case 'easy':
                 this.experiencePoints = 10;
+                this.coins = 10;
                 break;
             case 'medium':
                 this.experiencePoints = 20;
+                this.coins = 20;
                 break;
             case 'hard':
                 this.experiencePoints = 30;
+                this.coins = 30;
                 break;
             default:
                 this.experiencePoints = 10;
+                this.coins = 10;
         }
     }
     next();

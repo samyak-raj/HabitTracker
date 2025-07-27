@@ -38,6 +38,7 @@ function renderHabits(habits) {
           <div class="habit-stats">
             <span class="difficulty">🎯 ${habit.difficulty.charAt(0).toUpperCase() + habit.difficulty.slice(1)}</span>
             <span class="xp">⭐ ${habit.experiencePoints} XP</span>
+            <span class="coins">💰 ${habit.coins}</span>
           </div>
           <div class="habit-actions">
             <button class="btn btn-primary complete-btn" data-habit-id="${habit._id}">
