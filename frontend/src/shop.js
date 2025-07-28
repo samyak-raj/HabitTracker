@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const shopContainer = document.getElementById('shop-container');
     shopContainer.addEventListener('click', async (e) => {
-        if (e.target.matches('.btn-primary')) {
+        if (e.target.matches('.buybtn')) {
             const petId = e.target.dataset.petId;
             const result = await buyPet(petId);
             if (result) {
@@ -105,29 +105,41 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const signoutBtn = document.getElementById('signout-btn');
     signoutBtn.addEventListener('click', () => {
-        localStorage.removeItem('token');
+        localStorage.removeItem('authToken')
+        localStorage.removeItem('user')
         redirectToLogin();
     });
 
-    const signoutBtnMobile = document.getElementById('signout-btn-mobile');
-    signoutBtnMobile.addEventListener('click', () => {
-        localStorage.removeItem('token');
-        redirectToLogin();
-    });
+});
+// Remove DOMContentLoaded wrapper and attach event listeners directly
+const hamburger = document.getElementById('navbar-hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+const signOutBtnMobile = document.getElementById('signout-btn-mobile');
 
-    const hamburger = document.getElementById('navbar-hamburger');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (hamburger && mobileMenu) {
-        hamburger.addEventListener('click', () => {
-            const isOpen = !mobileMenu.hasAttribute('hidden');
-            if (isOpen) {
-                mobileMenu.setAttribute('hidden', '');
-                hamburger.setAttribute('aria-expanded', 'false');
-            } else {
-                mobileMenu.removeAttribute('hidden');
-                hamburger.setAttribute('aria-expanded', 'true');
-            }
-        });
+if (hamburger && mobileMenu) {
+  hamburger.addEventListener('click', () => {
+    const isOpen = !mobileMenu.hasAttribute('hidden');
+    if (isOpen) {
+      mobileMenu.setAttribute('hidden', '');
+      hamburger.setAttribute('aria-expanded', 'false');
+    } else {
+      mobileMenu.removeAttribute('hidden');
+      hamburger.setAttribute('aria-expanded', 'true');
     }
+  });
+}
+if (signOutBtnMobile) {
+  signOutBtnMobile.addEventListener('click', signOut);
+}
+function signOut() {
+  localStorage.removeItem('authToken')
+  localStorage.removeItem('user')
+  redirectToLogin();
+}
+// Optional: Close mobile menu when resizing to desktop
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768 && mobileMenu) {
+    mobileMenu.setAttribute('hidden', '');
+    hamburger.setAttribute('aria-expanded', 'false');
+  }
 });
