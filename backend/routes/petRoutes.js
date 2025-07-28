@@ -1,9 +1,8 @@
 import express from 'express';
-import { getPets, addPet } from '../controllers/petController.js';
-import { protect } from '../middleware/auth.js';
+import { getPets } from '../controllers/petController.js';
 
 const router = express.Router();
 
-router.route('/').get(getPets).post(protect, addPet);
+router.get('/', getPets);
 
 export default router;
