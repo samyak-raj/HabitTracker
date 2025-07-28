@@ -1,5 +1,7 @@
 
 import Pet from '../models/Pet.js';
+import User from '../models/User.js';
+
 // @desc    Get all pets
 // @route   GET /api/pets
 // @access  Public
@@ -67,4 +69,39 @@ const deletePet = async (req, res) => {
         res.status(500).json({ message: 'Server error', error: error });
     }
 };
-export { getPets, addPet, updatePet, deletePet };
+
+const buyPet = async (req, res) => {
+    try {
+        const { petId } = req.body;
+        const userId = req.user._id;
+
+        const pet = await Pet.findById(petId);
+        if (!pet) {
+            return res.status(404).json({ message: 'Pet not found' });
+        }
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        if (user.pets.includes(petId)) {
+            return res.status(400).json({ message: 'You already own this pet' });
+        }
+
+        if (user.coins < pet.cost) {
+            return res.status(400).json({ message: 'Not enough coins' });
+        }
+
+        user.coins -= pet.cost;
+        user.pets.push(petId);
+
+        await user.save();
+
+        res.status(200).json({ message: 'Pet purchased successfully', user });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error });
+    }
+};
+
+export { getPets, addPet, updatePet, deletePet, buyPet };
