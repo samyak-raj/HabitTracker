@@ -110,7 +110,7 @@ export const googleAuth = async (req, res) => {
 // Get current user
 export const getCurrentUser = async (req, res) => {
     try {
-        const user = req.user;
+        const user = await User.findById(req.user._id).populate('pets');
         // Streak reset logic
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -135,6 +135,7 @@ export const getCurrentUser = async (req, res) => {
             level: user.level,
             experience: user.experience,
             coins: user.coins,
+            pets: user.pets,
             currentStreak: user.currentStreak,
             longestStreak: user.longestStreak,
             lastCompletedDate: user.lastCompletedDate

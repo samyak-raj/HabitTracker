@@ -33,7 +33,7 @@ const renderPets = (pets, user) => {
         const petItem = document.createElement('div');
         petItem.classList.add('pet-item');
 
-        const isOwned = user.pets.includes(pet._id);
+        const isOwned = user.pets.some(ownedPet => ownedPet._id === pet._id);
 
         petItem.innerHTML = `
             <h3>${pet.name}</h3>
