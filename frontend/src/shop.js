@@ -37,7 +37,7 @@ const renderPets = (pets) => {
             <h3>${pet.name}</h3>
             <img src="${pet.image}" alt="${pet.name}" style="width: 100px; height: 100px;">
             <p>${pet.description}</p>
-            <p>Cost: ${pet.cost} Coins</p>
+            <p>Cost: ${pet.cost} &#128178;</p>
             <button class="btn btn-primary" data-pet-id="${pet._id}">Buy</button>
         `;
 
