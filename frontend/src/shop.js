@@ -41,7 +41,7 @@ const renderPets = (pets, user) => {
             <p>${pet.description}</p>
             <div class="pet-footer">
                 <p class="pet-cost">Cost: &#128178 ${pet.cost}</p>
-                <button class="btn ${isOwned ? 'btn-disabled' : 'btn-primary'}" data-pet-id="${pet._id}" ${isOwned ? 'disabled' : ''}>
+                <button class="${isOwned ? 'buybtn-disabled' : 'buybtn'}" data-pet-id="${pet._id}" ${isOwned ? 'disabled' : ''}>
                     ${isOwned ? 'Owned' : 'Buy'}
                 </button>
             </div>

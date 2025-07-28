@@ -60,7 +60,7 @@ body {
     margin: 0.5rem 0;
 }
 
-.pet-item .btn {
+.buybtn, .buybtn-disabled{
     margin-top: auto; /* Push the button to the bottom */
     width: 100%;
     padding: 0.5rem 1rem;
@@ -68,15 +68,26 @@ body {
     font-weight: bold;
     border: none;
     border-radius: 8px;
-    background-color: #007bff; /* Primary button color */
     color: white;
     cursor: pointer;
     transition: background-color 0.2s;
 }
 
-.pet-item .btn:hover {
+.buybtn {
+    background-color: #007bff;
+}
+
+.buybtn:hover {
     background-color: #0056b3; /* Darker shade on hover */
-};
+}
+
+.buybtn-disabled {
+    background-color: limegreen;
+}
+
+.buybtn-disabled:hover {
+    background-color: #189b18;
+}
 
 .pet-footer {
     margin-top: auto; /* Push the footer to the bottom of the card */
