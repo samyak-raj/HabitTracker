@@ -35,10 +35,12 @@ const renderPets = (pets) => {
 
         petItem.innerHTML = `
             <h3>${pet.name}</h3>
-            <img src="${pet.image}" alt="${pet.name}" style="width: 100px; height: 100px;">
+            <img src="${pet.image}" alt="${pet.name}" class="pet-image">
             <p>${pet.description}</p>
-            <p>Cost: ${pet.cost} &#128178;</p>
-            <button class="btn btn-primary" data-pet-id="${pet._id}">Buy</button>
+            <div class="pet-footer">
+                <p class="pet-cost">Cost: &#128178 ${pet.cost}</p>
+                <button class="btn btn-primary" data-pet-id="${pet._id}">Buy</button>
+            </div>
         `;
 
         shopContainer.appendChild(petItem);

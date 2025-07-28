@@ -1,3 +1,7 @@
+body {
+    background-color: #f9f9f9;
+}
+
 .shop-section {
     padding: 2rem;
 }
@@ -7,6 +11,8 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
+    border-bottom: 2px solid black; /* Add a horizontal black line */
+    padding-bottom: 0.5rem;
 }
 
 .coin-balance {
@@ -21,12 +27,66 @@
 }
 
 .pet-item {
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #ddd; /* Softer border */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for better appearance */
     padding: 1rem;
     text-align: center;
+    background-color: white; /* Light background for contrast */
+    transition: transform 0.2s, box-shadow 0.2s; /* Smooth hover effect */
+}
+
+.pet-item:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
 }
 
 .pet-item h3 {
     margin-top: 0;
+}
+
+.pet-image {
+    width: 150px;
+    height: 100px;
+    background-color: inherit; /* Ensure no background color */
+    object-fit: contain; /* Adjust image scaling */
+    margin: 0 auto 1rem; /* Center the image and add spacing below */
+}
+
+.pet-item p {
+    margin: 0.5rem 0;
+}
+
+.pet-item .btn {
+    margin-top: auto; /* Push the button to the bottom */
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    background-color: #007bff; /* Primary button color */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.pet-item .btn:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+};
+
+.pet-footer {
+    margin-top: auto; /* Push the footer to the bottom of the card */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pet-cost {
+    margin-bottom: 0.5rem; /* Add spacing between the cost and the button */
+    font-weight: bold;
+    color: #333; /* Darker text for better visibility */
 }
