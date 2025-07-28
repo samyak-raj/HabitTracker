@@ -45,7 +45,7 @@ const renderPets = (pets) => {
     });
 };
 
-const getUserCoins = async () => {zz
+const getUserCoins = async () => {
     try {
         const response = await api.get('/users/coins');
         return response.data;
