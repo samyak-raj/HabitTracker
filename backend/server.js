@@ -9,6 +9,7 @@ import path from 'path';
 
 import userRoutes from './routes/userRoutes.js';
 import habitRoutes from './routes/habitRoutes.js';
+import petRoutes from './routes/petRoutes.js';
 
 dotenv.config();
 const app = express();
@@ -25,6 +26,7 @@ app.use(express.json());
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/habits', habitRoutes);
+app.use('/api/pets', petRoutes);
 
 // Serve profile pictures statically
 app.use('/profile-pics', express.static(path.join(__dirname, 'public', 'profile-pics')));
