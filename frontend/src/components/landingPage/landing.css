@@ -1,11 +1,11 @@
 :root {
-    --primary-color: #4f46e5;
-    --primary-hover: #4338ca;
-    --text-color: #1f2937;
-    --text-light: #6b7280;
-    --background: #fffff;
-    --background-alt: #f9fafb;
-    --border-color: #e5e7eb;
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --text-color: #1e293b;
+    --text-light: #64748b;
+    --background: #f5f7fa;
+    --background-alt: #fff;
+    --border-color: #e2e8f0;
 }
 
 * {
@@ -15,8 +15,8 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    line-height: 1.5;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
     color: var(--text-color);
     background-color: var(--background);
 }
@@ -27,14 +27,16 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem 2rem;
-    background-color: var(--background);
+    background-color: var(--background-alt);
     border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.06);
 }
 
 .logo {
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--primary-color);
+    letter-spacing: 1px;
 }
 
 .auth-buttons {
@@ -44,21 +46,35 @@ body {
 
 /* Buttons */
 .btn {
-    padding: 0.5rem 1rem;
-    border-radius: 0.6rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
-    border: none;
+    border: 1px solid transparent;
+    background: var(--background-alt);
+    color: var(--primary-color);
+    transition: background 0.18s, color 0.18s, border 0.18s, box-shadow 0.18s;
+    box-shadow: none;
+    font-size: 1rem;
+}
+
+.btn:hover {
+    background: #f8fafc;
+    color: var(--primary-hover);
+    border: 1px solid var(--primary-hover);
+    box-shadow: 0 2px 8px rgba(37,99,235,0.08);
 }
 
 .btn-primary {
-    background-color: var(--primary-color);
-    color: white;
+    background: var(--primary-color);
+    color: #fff;
+    border: 1px solid var(--primary-color);
 }
 
 .btn-primary:hover {
-    background-color: var(--primary-hover);
+    background: var(--primary-hover);
+    color: #fff;
+    border: 1px solid var(--primary-hover);
 }
 
 .btn-outline {
@@ -72,8 +88,8 @@ body {
 }
 
 .btn-large {
-    padding: 0.75rem 1.5rem;
-    font-size: 1.125rem;
+    padding: 0.75rem 1.7rem;
+    font-size: 1.1rem;
 }
 
 /* Hero Section */
@@ -85,23 +101,58 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
+    background: var(--background-alt);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    left: -120px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle at 60% 40%, #06b6d4 0%, #818cf8 100%);
+    opacity: 0.13;
+    z-index: 0;
+    border-radius: 50%;
 }
 
 .hero-content {
     max-width: 600px;
+    position: relative;
+    z-index: 1;
 }
 
 .hero-content h1 {
-    font-size: 3.5rem;
-    line-height: 1.2;
+    font-size: 3rem;
+    line-height: 1.15;
     margin-bottom: 1.5rem;
-    color: var(--text-color);
+    color: var(--primary-color);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    position: relative;
+    display: inline-block;
+}
+
+.hero-content h1::after {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 5px;
+    background: var(--primary-color);
+    border-radius: 3px;
+    margin-top: 0.4rem;
+    margin-left: 0;
 }
 
 .subtitle {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     color: var(--text-light);
     margin-bottom: 2rem;
+    font-weight: 400;
 }
 
 /* Feature Grid */
@@ -112,33 +163,42 @@ body {
 }
 
 .feature-item {
-    background-color: var(--background-alt);
+    background-color: var(--background);
     padding: 1.5rem;
-    border-radius: 0.5rem;
+    border-radius: 12px;
     text-align: center;
-    transition: box-shadow 0.2s, transform 0.2s;
+    border: 1px solid var(--border-color);
+    border-top: 5px solid var(--primary-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;
+    position: relative;
 }
 
 .feature-item:hover {
-    box-shadow: 0 4px 24px rgba(79, 70, 229, 0.12), 0 1.5px 6px rgba(31, 41, 55, 0.08);
-    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 4px 12px rgba(37,99,235,0.10);
+    border: 1.5px solid var(--primary-color);
+    transform: translateY(-3px) scale(1.025);
     cursor: pointer;
 }
 
 .feature-icon {
-    font-size: 2rem;
+    font-size: 2.2rem;
     margin-bottom: 1rem;
     display: block;
+    color: var(--primary-color);
 }
 
 .feature-item h3 {
     margin-bottom: 0.5rem;
-    color: var(--text-color);
+    color: var(--primary-color);
+    font-weight: 600;
+    letter-spacing: 0.2px;
 }
 
 .feature-item p {
     color: var(--text-light);
-    font-size: 0.875rem;
+    font-size: 0.95rem;
+    font-weight: 400;
 }
 
 /* Responsive Design */
@@ -148,32 +208,27 @@ body {
         text-align: center;
         padding: 2rem 1rem;
     }
-
     .hero-content h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
-
     .feature-grid {
         grid-template-columns: 1fr;
     }
-
     .auth-buttons {
         gap: 0.5rem;
     }
-
     .btn {
         padding: 0.5rem 0.75rem;
-        font-size: 0.875rem;
+        font-size: 0.95rem;
     }
 }
 
 /* Wrapper to overlay Google button */
 .google-btn-wrapper {
     position: relative;
-    display: inline-block; /* To make it wrap the button size */
+    display: inline-block;
 }
 
-/* This will hold the rendered Google button */
 #get-started-hero-btn,
 #google-signin-btn {
     position: absolute;
@@ -181,5 +236,5 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0; /* Make it invisible but clickable */
+    opacity: 0;
 } 

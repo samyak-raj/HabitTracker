@@ -107,12 +107,12 @@ export default function initializeLanding() {
           <div class="feature-item">
             <span class="feature-icon">&#129464</span>
             <h3>Profile & Avatar</h3>
-            <p>Personalize your profile, upload aAdopt cute virtual pets, unlock companions, and grow your collection as you build habitsn avatar, and show off your progress.</p>
+            <p>Personalize your profile, upload an avatar, and show off your progress.</p>
           </div>
           <div class="feature-item">
             <span class="feature-icon">&#128062</span>
             <h3>Collect & Care for Pets</h3>
-            <p>Adopt cute virtual pets, unlock companions, and grow your collection as you build habits</p>
+            <p>Adopt cute virtual pets, unlock companions, and grow your collection as you build habits!</p>
           </div>
         </div>
       </div>
