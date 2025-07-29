@@ -681,3 +681,28 @@ body {
     padding: 0.9rem 0.7rem;
     }
 }
+
+/* Navbar Button Custom Colors */
+.navbar-main-btn {
+  background: transparent;
+  color: #2563eb;
+  border: none;
+  border-bottom: 3px solid #2563eb;
+  border-radius: 0;
+  transition: border-color 0.2s, color 0.2s, transform 0.18s cubic-bezier(0.4,0,0.2,1);
+}
+.navbar-main-btn:hover, .navbar-main-btn:focus {
+  color: #1d4ed8;
+  border-bottom: 3px solid #1d4ed8;
+  background: transparent;
+  transform: scale(1.07);
+}
+
+/* Keep signout button as is */
+.navbar-signout-btn {
+  background-color: #ef4444; /* red */
+  color: #fff;
+}
+.navbar-signout-btn:hover {
+  background-color: #b91c1c; /* darker red */
+}
