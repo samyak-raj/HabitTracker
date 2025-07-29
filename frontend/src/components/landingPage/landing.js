@@ -95,24 +95,24 @@ export default function initializeLanding() {
       <div class="hero-image">
         <div class="feature-grid">
           <div class="feature-item">
-            <span class="feature-icon">⭐</span>
+            <span class="feature-icon">&#127775</span>
             <h3>XP & Leveling</h3>
             <p>Earn experience points for every habit you complete and level up as you grow!</p>
           </div>
           <div class="feature-item">
-            <span class="feature-icon">🔥</span>
+            <span class="feature-icon">&#128293;</span>
             <h3>Streaks</h3>
             <p>Build and maintain streaks to stay motivated and consistent every day.</p>
           </div>
           <div class="feature-item">
-            <span class="feature-icon">🦸‍♂️</span>
+            <span class="feature-icon">&#129464</span>
             <h3>Profile & Avatar</h3>
-            <p>Personalize your profile, upload an avatar, and show off your progress.</p>
+            <p>Personalize your profile, upload aAdopt cute virtual pets, unlock companions, and grow your collection as you build habitsn avatar, and show off your progress.</p>
           </div>
           <div class="feature-item">
-            <span class="feature-icon">🔐</span>
-            <h3>Google Sign-In</h3>
-            <p>Sign up or log in instantly and securely with your Google account.</p>
+            <span class="feature-icon">&#128062</span>
+            <h3>Collect & Care for Pets</h3>
+            <p>Adopt cute virtual pets, unlock companions, and grow your collection as you build habits</p>
           </div>
         </div>
       </div>
