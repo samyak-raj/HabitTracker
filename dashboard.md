@@ -5,12 +5,12 @@ This document explains the functionality of the dashboard in the HabitHero appli
 ## Fetching User Data
 
 - **Endpoint**: `GET /api/users/me`
-- **Controller**: `userController.js` -> `getMe`
+- **Controller**: `userController.js` -> `getUserById`
 - **Description**:
   - This route is protected and requires a valid JWT.
   - When the dashboard page loads, a request is sent to this endpoint to fetch the logged-in user's data.
   - The `auth` middleware verifies the token and attaches the user's information to the request object.
-  - The `getMe` controller then retrieves the user's `username`, `email`, and `profilePicture` from the database and sends it back to the client.
+  - The `getUserById` controller then retrieves the user's `username`, `email`, and `profilePicture` from the database and sends it back to the client.
 
 ## Displaying Habits
 
