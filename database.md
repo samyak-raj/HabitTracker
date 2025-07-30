@@ -29,6 +29,14 @@ This document provides an overview of the database schema for the HabitHero appl
   - **`value`**: (Number) - A numerical value for progress, if applicable.
   - **`notes`**: (String) - Any notes for that day's progress.
 
+## Pet Model (`models/Pet.js`)
+
+- **`name`**: (String, required) - The name of the pet.
+- **`image`**: (String, required) - The URL to the pet's image.
+- **`description`**: (String) - A brief description of the pet.
+- **`cost`**: (Number, required) - The cost of the pet in coins.
+
 ## Relationships
 
 - **One-to-Many**: A `User` can have multiple `Habits`. This is represented by the `user` field in the `Habit` model, which creates a relationship between a habit and its owner.
+- **Many-to-Many**: A `User` can own multiple `Pets`, and a `Pet` can be owned by multiple `Users`. This is implemented by storing an array of `Pet` ObjectIds in the `pets` field of the `User` model.

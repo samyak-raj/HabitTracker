@@ -154,6 +154,13 @@ The backend provides a RESTful API with the following endpoints:
 - `DELETE /api/habits/:id` - Delete a habit
 - `POST /api/habits/:id/complete` - Complete a habit for today
 
+### Pets
+- `GET /api/pets` - Get all pets
+- `POST /api/pets` - Add a new pet
+- `PUT /api/pets/:id` - Update a pet
+- `DELETE /api/pets/:id` - Delete a pet
+- `POST /api/pets/buy` - Buy a pet
+
 ## 🤝 Contributing
 
 1. Fork the repository
